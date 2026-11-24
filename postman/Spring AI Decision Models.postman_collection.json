@@ -1,0 +1,345 @@
+{
+  "info": {
+    "_postman_id": "89e299e3-db0f-4544-b7a8-d2587a641305",
+    "name": "Spring AI Decision Models",
+    "description": "Ticket classification and the guardrailed support chat. Start Ollama and the app (./gradlew bootRun) first.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Tickets",
+      "description": "Decision model endpoints. Single-text endpoints take the message as a plain-text body; triage takes JSON.",
+      "item": [
+        {
+          "name": "On topic",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "My new guitar strings keep breaking. Can you send replacements?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/on-topic",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tickets",
+                "on-topic"
+              ]
+            }
+          }
+        },
+        {
+          "name": "On topic - off-topic message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "What's a good recipe for banana bread?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/on-topic",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tickets",
+                "on-topic"
+              ]
+            }
+          }
+        },
+        {
+          "name": "On topic with threshold",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "How do I tune a guitar by ear?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/on-topic/threshold?threshold=0.5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tickets",
+                "on-topic",
+                "threshold"
+              ],
+              "query": [
+                {
+                  "key": "threshold",
+                  "value": "0.5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "The neck of my new guitar is cracked. Can I get my money back?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/category",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tickets",
+                "category"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sentiment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "Great guitar, terrible service. Never again.",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/sentiment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tickets",
+                "sentiment"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Triage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Duplicate charge, cancelling\",\n  \"body\": \"You charged our music school twice for order 48213 and nobody replies. We are closing our account and moving to another supplier.\",\n  \"customer\": \"music-school\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/triage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tickets",
+                "triage"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Support chat",
+      "description": "The chat model wrapped by the input and output guardrails. The message is the plain-text body.",
+      "item": [
+        {
+          "name": "Return policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "How long do I have to return a guitar?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/chat",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "support",
+                "chat"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Blocked - sensitive data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "My card is 4111 1111 1111 1111, CVV 123. Why was I charged twice?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/chat",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "support",
+                "chat"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Blocked - off topic",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "Can you give me a recipe for banana bread?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/chat",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "support",
+                "chat"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Hand-off",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "Do you sell gift cards?",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/chat",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "support",
+                "chat"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+spring:
+  ai:
+    ollama:
+      init:
+        pull-model-strategy: when_missing
+        embedding:
+          include: false
+      chat:
+        model: phi:2.7b # llama3.1:8b
+        temperature: 0.0
+      decision:
+        model: d1-omni:600m # d3:2b # laya
