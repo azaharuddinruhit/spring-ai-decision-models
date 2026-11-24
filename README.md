@@ -54,6 +54,8 @@ The decision model does two jobs:
 You need Java 25 and [Ollama](https://ollama.com), running at `http://localhost:11434`.
 
 ```bash
+git clone https://github.com/azaharuddinruhit/spring-ai-decision-models.git
+cd spring-ai-decision-models
 ./gradlew bootRun
 ```
 
